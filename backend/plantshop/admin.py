@@ -25,7 +25,7 @@ class CustomerAdmin(admin.ModelAdmin):
 
 class OrderAdmin(admin.ModelAdmin):
   list_display = ('id', 'customer', 'date_ordered', 'complete', 'transaction_id')
-  list_filter = ('complete')
+  list_filter = ('complete', 'date_ordered')
 
 
 class OrderItemAdmin(admin.ModelAdmin):
