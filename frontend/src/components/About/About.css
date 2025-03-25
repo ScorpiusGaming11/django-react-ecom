@@ -1,0 +1,22 @@
+.about {
+  padding: 50px 0;
+}
+
+.about img {
+  height: 400px;
+  object-fit: cover;
+}
+
+.about-1-texts, .about-2-texts {
+  padding: 20px;
+}
+
+.about-1-texts h1, .about-2-texts h1 {
+  margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+  .about-1-img, .about-2-img {
+    margin-bottom: 20px;
+  }
+}
