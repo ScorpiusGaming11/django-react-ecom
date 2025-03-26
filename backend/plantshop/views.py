@@ -43,7 +43,7 @@ def logout_customer(request):
 @api_view(['GET'])
 def plant_list(request):
   plants = Plant.objects.all()
-  serializer = PlantSerializer(plants, many=True)
+  serializer = PlantSerializer(plants, many=True, context={'request': request})
   return Response(serializer.data, status=status.HTTP_200_OK)
 
 

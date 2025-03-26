@@ -28,7 +28,7 @@ class Plant(models.Model):
 # Image model to store images for each plant
 class Image(models.Model):
   plant = models.ForeignKey(Plant, on_delete=models.CASCADE, related_name='images')
-  image = models.ImageField(upload_to='plants/')
+  image = models.ImageField(upload_to='media/plants/')
   alt_text = models.CharField(max_length=200, blank=True, null=True)
 
   def __str__(self):

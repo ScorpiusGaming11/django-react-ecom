@@ -22,11 +22,19 @@ class ImageSerializer(serializers.ModelSerializer):
 
 
 class PlantSerializer(serializers.ModelSerializer):
-  image = ImageSerializer(read_only=True)
+  images = serializers.SerializerMethodField()
 
   class Meta:
     model = Plant
     fields = '__all__'
+
+  def get_images(self, obj):
+    image_urls = []
+    for image in obj.images.all():
+      full_url = self.context['request'].build_absolute_uri(image.image.url)
+      print(f"Full image URL: {full_url}")
+      image_urls.append(full_url)
+    return image_urls
 
 
 class UserSerializer(serializers.ModelSerializer):

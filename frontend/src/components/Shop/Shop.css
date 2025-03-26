@@ -1,0 +1,24 @@
+.shop {
+  padding: 24px 48px;
+  width: 100%;
+}
+
+.category {
+  margin: 20px 0;
+}
+
+.category-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.category-title {
+  margin: 0 10px;
+}
+
+.category-header span {
+  flex-grow: 1;
+  height: 2px;
+  background-color: #2ae239;
+}

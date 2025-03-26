@@ -2,6 +2,8 @@ from django.contrib import admin
 from django.urls import path
 from plantshop import views
 from rest_framework_simplejwt.views import TokenRefreshView
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -17,4 +19,4 @@ urlpatterns = [
     path('shop/cart/add/<int:plant_id>/', views.add_to_cart, name='add_to_cart'),
     path('shop/cart/remove/<int:plant_id>/', views.remove_from_cart, name='remove_from_cart'),
     path('shop/cart/update/<int:plant_id>/', views.update_cart_item, name='update_cart_item'),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
