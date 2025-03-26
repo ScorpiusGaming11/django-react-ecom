@@ -1,5 +1,6 @@
 .about {
-  padding: 50px 0;
+  padding: 48px;
+  width: 100%;
 }
 
 .about img {
@@ -8,15 +9,23 @@
 }
 
 .about-1-texts, .about-2-texts {
-  padding: 20px;
+  padding: 24px;
 }
 
 .about-1-texts h1, .about-2-texts h1 {
-  margin-bottom: 20px;
+  margin-bottom: 24px;
+}
+
+.about-1-texts p, .about-2-texts p {
+  font-size: 1.2rem;
+}
+
+.about-section-1 {
+  margin-bottom: 96px;
 }
 
 @media (max-width: 768px) {
   .about-1-img, .about-2-img {
-    margin-bottom: 20px;
+    margin-bottom: 24px;
   }
 }
