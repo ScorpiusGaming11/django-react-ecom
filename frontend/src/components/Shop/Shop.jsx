@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import './Shop.css';
 import ProductsList from "../ProductsList/ProductsList";
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
 const Shop = () => {
   const [plants, setPlants] = useState([]);
@@ -9,6 +10,7 @@ const Shop = () => {
   const [error, setError] = useState(null);
   const [cart, setCart] = useState([]);
   const [categoryMapping, setCategoryMapping] = useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPlants = async () => {
@@ -40,8 +42,14 @@ const Shop = () => {
   }, []);
 
   const handleAddToCart = (plant) => {
-    setCart([...cart, plant]);
-    alert(`${plant.name} added to cart!`);
+    // Check if the user is logged in
+    const token = localStorage.getItem('access_token');
+    if (!token) {
+      navigate('/login');
+    } else {
+      setCart([...cart, plant]);
+      alert(`${plant.name} added to cart!`);
+    }
   }
 
   const groupedPlants = plants.reduce((acc, plant) => {

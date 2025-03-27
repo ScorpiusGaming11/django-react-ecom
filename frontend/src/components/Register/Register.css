@@ -1,0 +1,13 @@
+.form {
+  padding: 48px;
+  width: 100vw;
+}
+
+.form-group {
+  text-align: justify;
+  font-size: 1.2em;
+}
+
+.login-link {
+  text-decoration: none;
+}

@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import CustomerSerializer, MyTokenObtainPairSerializer, CategorySerializer, PlantSerializer, ImageSerializer, OrderSerializer, OrderItemSerializer, ShippingAddressSerializer
-from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from .models import Plant, Category, Order, OrderItem, ShippingAddress, Image, Customer
@@ -16,8 +16,17 @@ from django.db import transaction
 def register_customer(request):
   serializer = CustomerSerializer(data=request.data)
   if serializer.is_valid():
-    serializer.save()
-    return Response(serializer.data, status=status.HTTP_201_CREATED)
+    customer = serializer.save()
+    user = customer.user
+
+    refresh = RefreshToken.for_user(user)
+    access_token = str(refresh.access_token)
+    refresh_token = str(refresh)
+
+    return Response({
+      'access': access_token,
+      'refresh': refresh_token
+    }, status=status.HTTP_201_CREATED)
   return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -83,7 +92,17 @@ def view_cart(request):
     order, created = Order.objects.get_or_create(customer=customer, complete=False)
     order_items = order.orderitem_set.all()
     serializer = OrderItemSerializer(order_items, many=True)
-    return Response(serializer.data, status=status.HTTP_200_OK)
+    cart_total = order.get_cart_total
+    cart_items = order.get_cart_items
+    return Response({
+      'items': serializer.data,
+      'cart_total': cart_total,
+      'cart_items': cart_items
+    }, status=status.HTTP_200_OK)
+  except Customer.DoesNotExist:
+    return Response({'error': 'Customer not found.'}, status=status.HTTP_404_NOT_FOUND)
+  except Order.DoesNotExist:
+    return Response({'error': 'Order not found.'}, status=status.HTTP_404_NOT_FOUND)
   except Exception as err:
     return Response({'error': str(err)}, status=status.HTTP_400_BAD_REQUEST)
 
